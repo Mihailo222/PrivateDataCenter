@@ -11,6 +11,11 @@
    
 
   tasks:
+   
+   - name: Change nameserver.
+     copy:
+      src: "{{ location_dir }}/{{ master_dir }}/{{ nameserver_file_folder }}/resolv.conf"
+      dest: /etc/resolv.conf 
   
    - name: Copy mysql configuration files.
      copy:

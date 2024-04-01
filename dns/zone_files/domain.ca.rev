@@ -1,0 +1,5 @@
+56.168.192.in-addr.arpa. 1w IN SOA ns1.domain.ca. hostmaster.domain.ca 1 1d 1h 1w 1h
+56.168.192.in-addr.arpa. 1w IN NS ns1.domain.ca.
+14.56.168.192.in-addr.arpa. 1w IN PTR ns1.domain.ca.
+15.56.168.192.in-addr.arpa. 1w IN PTR webSiteOne.domain.ca.
+15.56.168.192.in-addr.arpa. 1w IN PTR webSiteTwo.domain.ca.

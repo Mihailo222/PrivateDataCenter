@@ -1,3 +1,7 @@
+[dns_server]
+192.168.56.14
+
+
 [pxc_master_node]
 192.168.56.17
 
@@ -7,6 +11,7 @@
 [machines:children]
 pxc_master_node
 pxc_slave_node
+dns_server
 
 [machines:vars]
 ansible_ssh_user=vagrant

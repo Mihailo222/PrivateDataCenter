@@ -1,0 +1,37 @@
+acl "trusted_clients" {
+192.168.56.14; #dns_server
+192.168.56.15; #wp_server_one
+192.168.56.16; #wp_server_two
+192.168.56.17; #pxc_master_node
+192.168.56.18; #pxc_slave_node
+192.168.56.25; #pxc_virtual_ip_address
+localhost;
+};
+
+
+options {
+        directory "/var/cache/bind";
+
+
+          forwarders { 
+                8.8.8.8;
+                8.8.4.4; #Google public DNS servers
+          };
+
+        dnssec-validation auto;
+
+        auth-nxdomain no;
+
+        listen-on-v6 { ::1; };
+
+        listen-on port 53 {  localhost; 192.168.56.14; };
+
+
+
+        recursion yes; #salji upite u ime klijenata na druge DNS servere
+        allow-recursion {  trusted_clients; }; #ko su klijenti kojima je dozvoljeno
+        allow-query {  trusted_clients; }; #ko sme da salje upite ovom DNS serveru
+        allow-query-cache { trusted_clients; }; #ko sme da dobija odgovore iz kesa ovog DNS-a
+
+
+};

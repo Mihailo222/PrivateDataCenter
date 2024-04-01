@@ -14,3 +14,4 @@
  remote_user_password: Pass1
  remote_ip: 192.168.56.20
  master_ip: 192.168.56.17 
+ nameserver_file_folder: nameserver

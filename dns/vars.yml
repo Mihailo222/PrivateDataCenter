@@ -1,0 +1,6 @@
+---
+ dns_server_location: /mnt/c/Users/Acer/vagrant_projects_for_wsl/galeraAutomation
+ second_level_domain: domain.ca
+ bind_configuration_files_folder: /dns/config
+ zone_files_folder: /dns/zone_files
+ nameserver_file_folder: /dns/nameserver_file
