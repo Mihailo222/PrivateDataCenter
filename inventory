@@ -1,6 +1,11 @@
 [dns_server]
 192.168.56.14
 
+[wp_server_one]
+192.168.56.15
+
+[wp_server_two]
+192.168.56.16
 
 [pxc_master_node]
 192.168.56.17
@@ -12,6 +17,8 @@
 pxc_master_node
 pxc_slave_node
 dns_server
+wp_server_one
+wp_server_two
 
 [machines:vars]
 ansible_ssh_user=vagrant

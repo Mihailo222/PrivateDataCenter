@@ -1,0 +1,6 @@
+---
+ site_one_subdomain: wordpressOne
+ site_two_subdomain: wordpressTwo
+ nameserver_files_folder: /nameserver
+ wordpress_server_location: /mnt/c/Users/Acer/vagrant_projects_for_wsl/galeraAutomation/wp_server
+ wp_download_link: https://wordpress.org/latest.zip

@@ -37,4 +37,28 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
    end
 
+   #wordpress1
+   config.vm.define "wp_server_one" do |wp_server_one|
+    wp_server_one.vm.box = "geerlingguy/ubuntu2004"
+    wp_server_one.ssh.insert_key = false
+    wp_server_one.vm.hostname = "wpOne"
+    wp_server_one.vm.network "private_network", ip: "192.168.56.15", netmask: "255.255.255.0"
+     
+    wp_server_one.vm.provision "ansible" do |ansible|
+     ansible.playbook="wpOne.yml"
+    end
+   end
+
+     #wordpress2
+   config.vm.define "wp_server_two" do |wp_server_two|
+    wp_server_two.vm.box = "geerlingguy/ubuntu2004"
+    wp_server_two.ssh.insert_key = false
+    wp_server_two.vm.hostname = "wpTwo"
+    wp_server_two.vm.network "private_network", ip: "192.168.56.16", netmask: "255.255.255.0"
+
+    wp_server_two.vm.provision "ansible" do |ansible|
+     ansible.playbook="wpTwo.yml"
+    end
+   end
+
 end

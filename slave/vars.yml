@@ -10,8 +10,11 @@
  login_pass: root
  db1_name: wordpressdb1
  db2_name: wordpressdb2
- remote_user_uname: wordpress_user
- remote_user_password: Pass1
- remote_ip: 192.168.56.20
- master_ip: 192.168.56.17 
+ remote_user_uname_one: wordpress_user_one
+ remote_user_uname_two: wordpress_user_two
+ remote_user_one_password: Pass1 #remote mysql pass za usera1-wordpress1 sajt - baza za sajt je baza 1
+ remote_user_two_password: Pass2 #remote mysql pass za usera2-wordpress2 sajt - baza za sajt je baza 2
+ remote_ip_one: 192.168.56.15 #ip web servera1
+ remote_ip_two: 192.168.56.16 #ip web servera2
+ master_ip: 192.168.56.17
  nameserver_file_folder: nameserver

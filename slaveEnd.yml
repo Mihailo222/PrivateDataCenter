@@ -86,13 +86,32 @@
         login_user: "{{ login_uname }}"
         login_password: "{{ login_pass }}"
 
-     - name: Create a new remote wordpressuser.
+
+     - name: Create a new remote WordPress user one.
        mysql_user:
-        name: "{{ remote_user_uname }}"
-        password: "{{ remote_user_password }}"
-        host: "{{ remote_ip }}" #npr
-        #login_unix_socket: /var/run/mysqld/mysqld.sock - nije potreban za remote konekcije
+        name: "{{ remote_user_uname_one }}"
+        password: "{{ remote_user_one_password }}"
+        host: "{{ remote_ip_one }}" #npr
+        login_unix_socket: /var/run/mysqld/mysqld.sock #potreban ti je da se ansible zakaci kao mysql@localhost za dodavanje remote usera
         login_user: "{{ login_uname }}"
         login_password: "{{ login_pass }}"
-        priv: "{{ db1_name }}.*:ALL,{{ db2_name }}.*:ALL,GRANT"
+        priv: "{{ db1_name }}.*:ALL,GRANT"
         state: present
+
+
+
+
+     - name: Create a new remote WordPress user two.
+       mysql_user:
+        name: "{{ remote_user_uname_two }}"
+        password: "{{ remote_user_two_password }}"
+        host: "{{ remote_ip_two }}" #npr
+        login_unix_socket: /var/run/mysqld/mysqld.sock #potreban ti je da se ansible zakaci kao mysql@localhost za dodavanje remote usera
+        login_user: "{{ login_uname }}"
+        login_password: "{{ login_pass }}"
+        priv: "{{ db2_name }}.*:ALL,GRANT"
+        state: present
+
+
+
+
