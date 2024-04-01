@@ -1,0 +1,46 @@
+---
+
+- name: Install curl.
+  apt:
+   name: curl
+   update_cache: yes
+   cache_valid_time: 3600
+   state: present
+
+- name: Download the percona-release repository package.
+  get_url:
+   url: "https://repo.percona.com/apt/percona-release_latest.generic_all.deb"
+   dest: "/home/vagrant/"
+
+- name: Install required packages.
+  apt:
+   name:
+    - gnupg2
+    - lsb-release
+   update_cache: yes
+   cache_valid_time: 3600
+   state: present
+
+- name: Install perocna debian package downloaded.
+  apt:
+   deb: "/home/vagrant/percona-release_latest.generic_all.deb"
+   update_cache: yes
+   cache_valid_time: 3600
+   state: present
+
+- name: Setup Percona XtraDB Cluster 8.0.  #not idemponent
+  command:
+   "percona-release setup pxc-80"
+
+
+- name: Install Percona XtraDB Cluster.
+  apt:
+   name: percona-xtradb-cluster
+   update_cache: yes
+   cache_valid_time: 3600
+   state: present
+
+- name: Stop MySQL service.
+  service:
+   name: mysql
+   state: stopped

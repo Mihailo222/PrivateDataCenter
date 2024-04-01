@@ -1,0 +1,16 @@
+---
+ location_dir: /mnt/c/Users/Acer/vagrant_projects_for_wsl/galeraAutomation
+ slave_dir: slave
+ keepalive_dir: keepalive
+ master_dir: master
+ root_uname: root
+ root_pass: root
+ unix_socket_file: /var/run/mysqld/mysqld.sock
+ login_uname: root
+ login_pass: root
+ db1_name: wordpressdb1
+ db2_name: wordpressdb2
+ remote_user_uname: wordpress_user
+ remote_user_password: Pass1
+ remote_ip: 192.168.56.20
+ master_ip: 192.168.56.17 

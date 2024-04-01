@@ -1,0 +1,98 @@
+---
+ - name: Part Two - slave configuration.
+   hosts: pxc_slave_node
+   become: true
+
+   vars_files:
+    - slave/vars.yml
+
+   tasks:
+     - name: Copy ca.pem, server-cert.pem and server-key.pem files.
+       copy:
+        src: "{{ location_dir }}/{{ master_dir }}/fetched/{{ master_ip }}/var/lib/mysql/{{ item.val }}"
+        dest: "/var/lib/mysql/{{ item.val }}"
+        owner: mysql
+        group: mysql
+        mode: 0600
+        remote_src: false
+       with_items:
+        - val: "ca.pem"
+        - val: "server-cert.pem"
+        - val: "server-key.pem"
+
+     - name: Restart MySQL service.
+       service:
+        name: mysql
+        state: started
+
+
+     - name: Install keepalive service for providing virtual IP address of cluster on slave server.
+       apt:
+        name: keepalived
+        update_cache: true
+        cache_valid_time: 3600
+        state: present
+
+
+     - name: Copy keepalive configuration files to master server.
+       copy:
+        src: "{{ location_dir }}/{{ slave_dir }}/{{ keepalive_dir }}/keepalived.conf"
+        dest: "/etc/keepalived/keepalived.conf"
+        remote_src: false
+
+     - name: Restart keepalive service
+       service:
+        name: keepalived.service
+        state: restarted
+
+     - name: Install pip.
+       apt:
+        name: python3-pip
+        update_cache: yes
+        cache_valid_time: 3600
+        state: present
+
+     - name: Install PyMySQL.
+       pip:
+        name: pymysql
+        state: present
+
+    #Ansible mora da ima root credentials kako bi mogao da pristupi mysql servisu hosta tj. da koristi mysql_user modul, ili preko ovog taska ili preko .my.cnf fajla u home direktorijumu
+     - name: Provide Ansible with MySQL root credentials.
+       mysql_user:
+        name: "{{ root_uname }}"
+        host: localhost #root access mysql-u je moguc samo preko localhost-a
+        password: "{{ root_pass }}"
+        login_unix_socket: "{{ unix_socket_file }}" #path do socket fajla koji omogucuje MySQL lokalnim klijentima da se konektuju na MySQL service. 
+        login_user: "{{ login_uname }}"   #ovo su kredencijali preko kojih ce ansible da vrsi mysql taskove !! (login_username i login_password)
+        login_password: "{{ login_pass }}"
+        check_implicit_admin: yes 
+        priv: "*.*:ALL,GRANT"  #root ima privilegije nad svima bazama servisa mysql servera
+
+ 
+
+       #MySQL useri i njihove baze su dodate na oba hosta koja cine cluster-nema potrebe za ponavljanjem ovog koda.
+     - name: Create a new database for first website.
+       mysql_db:
+        name: "{{ db1_name }}"
+        state: present
+        login_user: "{{ login_uname }}"
+        login_password: "{{ login_pass }}"
+
+     - name: Create a new database for second website.
+       mysql_db:
+        name: "{{ db2_name }}"
+        state: present
+        login_user: "{{ login_uname }}"
+        login_password: "{{ login_pass }}"
+
+     - name: Create a new remote wordpressuser.
+       mysql_user:
+        name: "{{ remote_user_uname }}"
+        password: "{{ remote_user_password }}"
+        host: "{{ remote_ip }}" #npr
+        #login_unix_socket: /var/run/mysqld/mysqld.sock - nije potreban za remote konekcije
+        login_user: "{{ login_uname }}"
+        login_password: "{{ login_pass }}"
+        priv: "{{ db1_name }}.*:ALL,{{ db2_name }}.*:ALL,GRANT"
+        state: present

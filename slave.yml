@@ -1,0 +1,20 @@
+---
+- name: Configuring slave server.
+  hosts: pxc_slave_node
+  become: true
+
+  vars_files:
+   - slave/vars.yml
+
+  roles:
+   - pxc
+
+  tasks:
+   - name: Copy mysql configuration files.
+     copy:
+      src: "{{ location_dir }}/{{ slave_dir }}/mysqld.cnf"
+      dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+      owner: mysql
+      group: mysql
+      mode: 0644
+      remote_src: false
