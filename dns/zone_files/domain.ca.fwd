@@ -2,4 +2,4 @@ domain.ca. 1w IN SOA ns1.domain.ca. hostmaster.domain.ca 1 1d 1h 1w 1h
 domain.ca. 1w IN NS ns1.domain.ca.
 ns1.domain.ca. 1w IN A 192.168.56.14
 webSiteOne.domain.ca. 1w IN A 192.168.56.15
-webSiteTwo.domain.ca. 1w IN A 192.168.56.16
+webSiteTwo.domain.ca. 1w IN A 192.168.56.15
