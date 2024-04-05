@@ -15,7 +15,7 @@ subdomain_two = "subdomain_two.domain.ca"
 
 def edit_named_conf_local(key_domain,domain, key_dns_ip, dns_ipv4):
 
-    with open("config/named.conf.local","r") as file:
+    with open("dns/config/named.conf.local","r") as file:
         lines = file.readlines()
         print(lines) 
 
@@ -30,7 +30,7 @@ def edit_named_conf_local(key_domain,domain, key_dns_ip, dns_ipv4):
 
 
 
-    with open("config/named.conf.local","w") as file: #ispisuje liniju po liniju kako ja hocu u prazan fajl
+    with open("dns/config/named.conf.local","w") as file: #ispisuje liniju po liniju kako ja hocu u prazan fajl
         for line in lines:
             if "%s.rev" %(key_domain) in line:
                 file.write('file "/etc/bind/%s.rev";' % (domain)+'\n')
@@ -54,7 +54,7 @@ def edit_named_conf_options(dns_ipv4, trusted_clients):
         acl_list+='};\n'
 
 
-        with open("config/named.conf.options","r") as file:
+        with open("dns/config/named.conf.options","r") as file:
             lines = file.readlines()
  
 
@@ -62,7 +62,7 @@ def edit_named_conf_options(dns_ipv4, trusted_clients):
         last_index_acl_list = lines.index('};\n')
 
 
-        with open("config/named.conf.options","w") as file:
+        with open("dns/config/named.conf.options","w") as file:
 
             file.write(acl_list)
 
@@ -78,13 +78,13 @@ def edit_named_conf_options(dns_ipv4, trusted_clients):
                 else:
                     file.write(line)
 def edit_resolv_conf(dns_ipv4):
-    with open("nameserver_file/resolv.conf","w") as file:
+    with open("dns/nameserver_file/resolv.conf","w") as file:
         file.write("nameserver %s" %(dns_ipv4))
 def edit_fwd_file(dns_ipv4, ws1_ipv4,domain,subdomain_one, subdomain_two):
-    with open("zone_files/%s.fwd" % (domain),"r") as file:
+    with open("dns/zone_files/%s.fwd" % (domain),"r") as file:
         lines = file.readlines()
     
-    with open("zone_files/%s.fwd" %(domain),"w") as file:
+    with open("dns/zone_files/%s.fwd" %(domain),"w") as file:
         for line in lines:
             if lines.index(line)==0:
                 file.write('%s. 1w IN SOA ns1.%s. hostmaster.%s 1 1d 1h 1w 1h\n' %(domain,domain,domain))
@@ -117,13 +117,13 @@ def edit_rev_file(dns_ipv4, ws1_ipv4,domain,subdomain_one, subdomain_two):
     conf+="%s.in-addr.arpa. 1w IN PTR %s.%s.\n" %(ws1_iprev,subdomain_two,domain)
    # print(conf)
 
-    with open("zone_files/%s.rev" % (domain),"w") as file:
+    with open("dns/zone_files/%s.rev" % (domain),"w") as file:
         file.write(conf)
 def edit_vars_file(key_domain,domain):
-    with open("vars.yml","r") as file:
+    with open("dns/vars.yml","r") as file:
         lines = file.readlines()
 
-    with open("vars.yml","w") as file:
+    with open("dns/vars.yml","w") as file:
         for line in lines:
             if key_domain in line:
                 file.write(" second_level_domain: %s\n" %(domain))
@@ -135,8 +135,8 @@ def edit_vars_file(key_domain,domain):
 def edit_dns_config(key_domain, domain,key_dns_ip,dns_ipv4,ws1_ipv4,subdomain_one,subdomain_two):
 
     #firstly rename .fwd and .fwd files
-    os.rename("zone_files/%s.fwd" %(key_domain),"zone_files/%s.fwd" %(domain))
-    os.rename("zone_files/%s.rev" %(key_domain),"zone_files/%s.rev" %(domain))
+    os.rename("dns/zone_files/%s.fwd" %(key_domain),"dns/zone_files/%s.fwd" %(domain))
+    os.rename("dns/zone_files/%s.rev" %(key_domain),"dns/zone_files/%s.rev" %(domain))
 
     #edit DNS ip address in Vagrantfile
     with open("Vagrantfile","r") as file:
