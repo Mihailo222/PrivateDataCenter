@@ -2,8 +2,10 @@ import os
 
 #***********************Variables*************************************************
 #*******************(EDIT THESE PARAMETERS)***************************************
-wsOne_ipv4 = "WORDPRESS SERVER IP ADDRESS"
+wsOne_ipv4 = "WORDPRESS SERVER1 IP ADDRESS"
+wsTwo_ipv4 = "WORDPRESS SERVER2 IP ADDRESS"
 wsOne_ipv4_key = "192.168.56.15"
+wsTwo_ipv4_key = "192.168.56.16"
 dns_ipv4 = "192.168.56.14"
 domain = "NEW DOMAIN"
 key_domain = "domain.ca"
@@ -83,6 +85,32 @@ def edit_vars_file(siteOne_wp_conf_folder, siteTwo_wp_conf_folder):
             else:
                 file.write(line)
 
+def edit_db_vars_file(ws_ip_one, ws_ip_two):
+    with open("slave/vars.yml","r") as file:
+        lines = file.readlines()
+
+    with open("slave/vars.yml","w") as file:
+        for line in lines:
+            if "remote_ip_one:" in line:
+                file.write(" remote_ip_one: %s #ip web servera1\n", ws_ip_one)
+            elif "remote_ip_two:" in line:
+                file.write(" remote_ip_two: %s #ip web servera1\n", ws_ip_two)
+            else:
+                file.write(line)            
+
+def edit_inventory(ws1_ip, ws2_ip):
+    with open("inventory","r") as file:
+        lines = file.readlines()
+    with open("inventory","w") as file:
+        for line in lines:
+            if ws1_ip in line:
+                file.write(ws1_ip+'\n')
+            elif ws2_ip in line:
+                file.write(ws2_ip+'\n')
+            else:
+                file.write(line)
+
+
 
 
 def edit_web_server_configuration():
@@ -107,9 +135,14 @@ def edit_web_server_configuration():
         for line in lines:
             if wsOne_ipv4_key in line:
                 file.write('    wp_server_one.vm.network "private_network", ip: "%s", netmask: "255.255.255.0"\n' %(wsOne_ipv4))
+            elif wsTwo_ipv4_key in line:
+                file.write('    wp_server_two.vm.network "private_network", ip: "%s", netmask: "255.255.255.0"\n' %(wsTwo_ipv4))            
             else:
                 file.write(line)
 
+    edit_db_vars_file(wsOne_ipv4,wsTwo_ipv4)
+    edit_inventory(wsOne_ipv4_key,wsTwo_ipv4_key)
+    
 
 
 

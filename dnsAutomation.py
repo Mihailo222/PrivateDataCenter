@@ -129,7 +129,15 @@ def edit_vars_file(key_domain,domain):
                 file.write(" second_level_domain: %s\n" %(domain))
             else:
                 file.write(line)
-
+def edit_inventory(dns_ip):
+    with open("inventory","r") as file:
+        lines = file.readlines()
+    with open("inventory","w") as file:
+        for line in lines:
+            if dns_ip in line:
+                file.write(dns_ip+'\n')
+            else:
+                file.write(line)
 
 #**********************************************************************************
 def edit_dns_config(key_domain, domain,key_dns_ip,dns_ipv4,ws1_ipv4,subdomain_one,subdomain_two):
@@ -157,6 +165,13 @@ def edit_dns_config(key_domain, domain,key_dns_ip,dns_ipv4,ws1_ipv4,subdomain_on
     edit_fwd_file(dns_ipv4,ws1_ipv4,domain,subdomain_one,subdomain_two)
     edit_rev_file(dns_ipv4,ws1_ipv4,domain,subdomain_one,subdomain_two)
     edit_vars_file(key_domain,domain)
+    edit_inventory(key_dns_ip)
+
+
+
+
+
+
 
 #**********************FUNCTION CALL*************************************************
 

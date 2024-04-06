@@ -95,6 +95,18 @@ def edit_vagrantfile(master_ip, slave_ip):
                 file.write('    pxc_slave_node.vm.network "private_network", ip: "%s", netmask: "255.255.255.0"'%(slave_ip))
             else:
                 file.write(line) 
+def edit_inventory(db1_ip, db2_ip):
+    with open("inventory","r") as file:
+        lines = file.readlines()
+    with open("inventory","w") as file:
+        for line in lines:
+            if db1_ip in line:
+                file.write(db1_ip+'\n')
+            elif db2_ip in line:
+                file.write(db2_ip+'\n')
+            else:
+                file.write(line)
+
 #**********************************************************************************
 
 
@@ -112,6 +124,6 @@ def edit_db_files():
     edit_vars_file(wp_db_username1,wp_db_username2,wp_pass1,wp_pass2,percona_master_ipv4_val,db1_name, db2_name)
     #edit Vagrantfile
     edit_vagrantfile(percona_master_ipv4_val,percona_slave_ipv4_val)
-
+    edit_inventory(percona_master_ipv4_key,percona_slave_ipv4_key)
 
 edit_db_files()
