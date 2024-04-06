@@ -10,7 +10,7 @@ percona_slave_ipv4_val = ""
 virtual_ip_key = "192.168.56.25/24"
 virtual_ip_val = ""
 
-folderMaster = "master"
+folderMaster = "master" 
 folderSlave = "slave"
 
 auth_pass = ""
