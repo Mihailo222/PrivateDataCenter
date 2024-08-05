@@ -11,3 +11,6 @@
  For a database I chose to configure **Percona Xtradb Cluster** - High Availability Solution for MySQL. What I achieved here is  master and slave server synchronized to work as one. The entire cluster has a virtual IP address that is configured with keepalived service. Communication between servers in a cluster is encrypted. <br>
  
  So, why we need two web servers? My plan is  to make a web application that moves whole configuration from one server to another if one server is attacked. This is left for future implementation. The entire configuration is automated with python scripts, so if there is a need for changing some basic parameters as domain name, IP address, database name etc. I don’t need to do it in every single file manually. 
+
+// /etc/ansible/hosts-> all hosts in this file
+// ssh-copy-id -i vagrant.ed25519 vagrant@IP //kopira public key ovog private key-a koji imamo na nasem hostu i bitno je jako da je to ovaj kljuc, jer je on u /etc/ansible.hosts fajlu !!!
