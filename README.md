@@ -14,3 +14,4 @@
 
 // /etc/ansible/hosts-> all hosts in this file
 // ssh-copy-id -i vagrant.ed25519 vagrant@IP //kopira public key ovog private key-a koji imamo na nasem hostu i bitno je jako da je to ovaj kljuc, jer je on u /etc/ansible.hosts fajlu !!!
+// ansible-playbook -i /etc/ansible/hosts slaveEnd.yml --limit pxc_slave_node
