@@ -17,3 +17,6 @@
 // ansible-playbook -i /etc/ansible/hosts slaveEnd.yml --limit pxc_slave_node
 
 //sve ip adrese iz promenljivih iz baze se moraju ispraviti da odgovaraju pravim ip adresama web servera
+
+//sa wordpress servera se logujem na bazu:
+> mysql -h 192.168.56.18 -u wordpress_user -p 
