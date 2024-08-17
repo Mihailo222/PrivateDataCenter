@@ -22,3 +22,5 @@
 > mysql -h 192.168.56.18 -u wordpress_user -p
 >
 > redosled: 1 dns, 2 baza, 3 web server. ne menjati ip adrese ako ne moras bas...
+> provera: mysql -u root -p; show databases; use mysql; show tables; select User from user; //users added
+>  mysql -u root -p; show databases; ''wp1 i 2
