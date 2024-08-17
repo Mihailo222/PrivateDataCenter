@@ -24,3 +24,4 @@
 > redosled: 1 dns, 2 baza, 3 web server. ne menjati ip adrese ako ne moras bas...
 > provera: mysql -u root -p; show databases; use mysql; show tables; select User from user; //users added
 >  mysql -u root -p; show databases; ''wp1 i 2
+> wget http://webSiteOne.domain.ca FROM DNS, NOT FROM BROWSER (we want the same subnet)
