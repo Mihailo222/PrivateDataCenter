@@ -19,4 +19,6 @@
 //sve ip adrese iz promenljivih iz baze se moraju ispraviti da odgovaraju pravim ip adresama web servera
 
 //sa wordpress servera se logujem na bazu:
-> mysql -h 192.168.56.18 -u wordpress_user -p 
+> mysql -h 192.168.56.18 -u wordpress_user -p
+>
+> redosled: 1 dns, 2 baza, 3 web server. ne menjati ip adrese ako ne moras bas...
