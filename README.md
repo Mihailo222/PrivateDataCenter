@@ -12,16 +12,4 @@
  
  So, why we need two web servers? My plan is  to make a web application that moves whole configuration from one server to another if one server is attacked. This is left for future implementation. The entire configuration is automated with python scripts, so if there is a need for changing some basic parameters as domain name, IP address, database name etc. I don’t need to do it in every single file manually. 
 
-// /etc/ansible/hosts-> all hosts in this file
-// ssh-copy-id -i vagrant.ed25519 vagrant@IP //kopira public key ovog private key-a koji imamo na nasem hostu i bitno je jako da je to ovaj kljuc, jer je on u /etc/ansible.hosts fajlu !!!
-// ansible-playbook -i /etc/ansible/hosts slaveEnd.yml --limit pxc_slave_node
 
-//sve ip adrese iz promenljivih iz baze se moraju ispraviti da odgovaraju pravim ip adresama web servera
-
-//sa wordpress servera se logujem na bazu:
-> mysql -h 192.168.56.18 -u wordpress_user -p
->
-> redosled: 1 dns, 2 baza, 3 web server. ne menjati ip adrese ako ne moras bas...
-> provera: mysql -u root -p; show databases; use mysql; show tables; select User from user; //users added
->  mysql -u root -p; show databases; ''wp1 i 2
-> wget http://webSiteOne.domain.ca FROM DNS, NOT FROM BROWSER (we want the same subnet); vrv zbog /etc/hosts koji moras da konf. na lh
